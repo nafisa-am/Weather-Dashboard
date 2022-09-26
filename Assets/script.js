@@ -2,7 +2,6 @@ const cityName = document.querySelector("#searchedCity");
 const currentCity = "";
 const lastCity = "";
 
-
 var apiCurrentWeather = function (event) {
     // event.preventDefault();
     var city = document.querySelector("#city").value;
