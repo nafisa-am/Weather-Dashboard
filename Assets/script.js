@@ -1,8 +1,6 @@
-// https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={API key}
-
 // Variables //
 const nameOfCity = document.querySelector("#findCity");
-const apiKey = "260882e0a8017e107611bafad6f6756b";
+const apiKey = "0f5afb6cde51dd9b2a58d51dc4cf30d4";
 const city = "";
 const previousCity = "";
 const savedCities = "";
@@ -62,5 +60,55 @@ const apiCurrentWeather = function (event) {
           currentUvi.textContent = "UV Index: " + uvi.value;
           currentWeather.append(currentUvi);
         });
+    });
+};
+// Forecast Weather //
+const apiForecastWeather = function (event) {
+  const city = document.querySelector("#city").value;
+  fetch(
+    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log("forecast", data);
+      const forecastTitle = document.querySelector("#forecast");
+      forecastTitle.textContent = "";
+      forecastTitle.textContent = "5-Day Forecast";
+
+      const upcomingForecast = document.querySelector("#forecastContainer");
+      upcomingForecast.innerHTML = "";
+      for (let i = 0; i < data.list.length; i++) {
+        const dayData = data.list[i];
+        const dayTimeUTC = dayData.dt;
+        const timeZoneOffset = data.city.timezone;
+        const timeZoneOffsetHours = timeZoneOffset / 60 / 60;
+        const thisMoment = moment
+          .unix(dayTimeUTC)
+          .utc()
+          .utcOffset(timeZoneOffsetHours);
+        if (
+          thisMoment.format("HH:mm:ss") === "11:00:00" ||
+          thisMoment.format("HH:mm:ss") === "12:00:00" ||
+          thisMoment.format("HH:mm:ss") === "13:00:00"
+        ) {
+          // Retrieve Data//
+          upcomingForecast.innerHTML += `
+          <div class="card m-2 p0">
+              <ul class="list-unstyled p-3">
+                  <li>${thisMoment.format("dddd DD/MM/YY")}</li>
+                  <li class="weather-icon"><img src="https://openweathermap.org/img/wn/${
+                    dayData.weather[0].icon
+                  }@2x.png"></li>
+                  <li>Temp: ${dayData.main.temp}&#8457;</li>
+                  <br>
+                  <li>Temp: ${dayData.wind.speed}MHP;</li>
+                  <br>
+                  <li>Humidity: ${dayData.main.humidity}%</li>
+              </ul>
+          </div>`;
+        }
+      }
     });
 };
