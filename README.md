@@ -18,8 +18,11 @@ When user searches for a city they are presented with current and future weather
 
 # Screenshots:
 
+<img width="1439" alt="Screenshot 2022-11-05 at 23 37 37" src="https://user-images.githubusercontent.com/108237958/200151788-007c219c-f625-4612-9e51-2ae39511a7cd.png">
+
+<img width="1439" alt="Screenshot 2022-11-06 at 02 51 59" src="https://user-images.githubusercontent.com/108237958/200151793-31ad7f9c-359e-47a4-af88-582df610824d.png">
+
 # Links:
 
 Deployed URL:
-
 Github URL:
