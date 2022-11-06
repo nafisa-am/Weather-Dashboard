@@ -2,7 +2,6 @@
 const nameOfCity = document.querySelector("#findCity");
 const apiKey = "0f5afb6cde51dd9b2a58d51dc4cf30d4";
 const city = "";
-const previousCity = "";
 const savedCities = "";
 
 const apiCurrentWeather = function (event) {
@@ -34,9 +33,7 @@ const apiCurrentWeather = function (event) {
 
       const currentTemperature = document.createElement("span");
       currentTemperature.textContent =
-        "Temperature: " +
-        Math.floor((response.main.temp - 273.15) * 1.8 + 32) +
-        " °F";
+        "Temperature: " + Math.floor(response.main.temp - 273.15) + " °C";
 
       currentWeather.append(currentTemperature);
       const currentHumidity = document.createElement("span");
@@ -62,11 +59,12 @@ const apiCurrentWeather = function (event) {
         });
     });
 };
+
 // Forecast Weather //
 const apiForecastWeather = function (event) {
   const city = document.querySelector("#city").value;
   fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`
+    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`
   )
     .then(function (response) {
       return response.json();
@@ -101,11 +99,11 @@ const apiForecastWeather = function (event) {
                   <li class="weather-icon"><img src="https://openweathermap.org/img/wn/${
                     dayData.weather[0].icon
                   }@2x.png"></li>
-                  <li>Temp: ${dayData.main.temp}&#8457;</li>
+                  <li>Temp: ${dayData.main.temp}&#8451;</li>
                   <br>
-                  <li>Temp: ${dayData.wind.speed}MHP;</li>
+                  <li>Wind: ${dayData.wind.speed} mph </li>
                   <br>
-                  <li>Humidity: ${dayData.main.humidity}%</li>
+                  <li>Humidity: ${dayData.main.humidity} %</li>
               </ul>
           </div>`;
         }
@@ -133,10 +131,10 @@ const renderCity = function () {
   searchedCity.textContent = "";
   // Retrieve from local storage //
   for (let i = 0; i < localStorage.length; i++) {
-    let cityHistory = localStorage.getItem("cities" + i);
-    console.log(cityHistory);
+    let savedCities = localStorage.getItem("cities" + i);
+    console.log(savedCities);
     let cityEl;
-    cityEl = `<button type="button" class="list-group-item list-group-item-action active">${cityHistory}</button></li><br>`;
+    cityEl = `<button type="button" class="list-group-item list-group-item-action active">${savedCities}</button></li><br>`;
     // Append searched city //
     $("#searchedCity").prepend(cityEl);
   }
