@@ -24,5 +24,5 @@ When user searches for a city they are presented with current and future weather
 
 # Links:
 
-Deployed URL:
-Github URL:
+- Deployed URL:
+- Github URL:
